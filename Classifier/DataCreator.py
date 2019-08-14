@@ -22,7 +22,7 @@ def create_training_data(DATADIR):
             ret, bw = cv2.threshold(img_array, 127, 255, cv2.THRESH_BINARY)
 
             # assign each image to the appropriate output class
-            training_data.append([bw, class_num + 1])
+            training_data.append([bw, class_num])
 
 
 create_training_data(DATADIR)
@@ -34,14 +34,13 @@ y = []
 
 for img, label in training_data:
     X.append(ext.extract_features(img))
-    y.append(label)
+    temp = [0] * 8
+    temp[label] = 1
+    y.append(temp)
 
-
+dataset = [X , y]
 # save training data
-out = open("X_train" , "wb")
-pickle.dump(X,out)
-out.close()
+with open("RawData" , "wb") as f:
+    pickle.dump( dataset,f)
 
-out = open("y_train" , "wb")
-pickle.dump(y,out)
-out.close()
+
