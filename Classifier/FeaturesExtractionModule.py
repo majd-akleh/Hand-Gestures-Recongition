@@ -8,6 +8,8 @@ def extract_features(binaryImage):
     # label_image = measure.label(binaryImage)
 
     region = measure.regionprops(binaryImage,coordinates='rc')
+
+    # only one region is provided
     region = region[0]
     features = [region.eccentricity, region.extent, region.solidity]
     features.append(region.eccentricity ** 2)
